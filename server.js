@@ -52,23 +52,25 @@ app.get("/products", (req, res) => {
   res.status(200).json(products);
 });
 
+app.get("/products/category/:categoryName", (req, res) => {
+  const category = req.params.categoryName;
+
+  const filteredProducts = products.filter(
+    p => p.category.toLowerCase() === category.toLowerCase()
+  );
+
+  res.status(200).json(filteredProducts);
+});
+
 app.get("/products/:id", (req, res) => {
-  const productId = Number(req.params.id);
-  const product = products.find(p => p.id === productId);
+  const id = parseInt(req.params.id);
+
+  const product = products.find(p => p.id === id);
 
   if (!product) {
     return res.status(404).json({ message: "Product not found" });
   }
 
-  res.status(200).json(product);
-});
-
-app.get("/products/category/:categoryName", (req, res) => {
-    const category = req.params.categoryName
-    const product = products.filter(p => p.category.toLowerCase() === category); //find --> returns only first matching value , filter --> returns all matching values
-    if (!product) {
-    return res.status(404).json({ message: "Product not found" });
-    }
   res.status(200).json(product);
 });
 
