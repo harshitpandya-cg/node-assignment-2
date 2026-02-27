@@ -52,14 +52,14 @@ app.get("/products", (req, res) => {
   res.status(200).json(products);
 });
 
-app.get("/products/category/:categoryName", (req, res) => {
-  const category = req.params.categoryName;
+app.get("/products/category/:category", (req, res) => {
+  const category = req.params.category;
 
   const filteredProducts = products.filter(
-    p => p.category.toLowerCase() === category.toLowerCase()
+    product => product.category === category
   );
 
-  res.status(200).json(filteredProducts);
+  res.json(filteredProducts);
 });
 
 app.get("/products/:id", (req, res) => {
